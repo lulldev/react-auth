@@ -3,6 +3,10 @@ const initialState: any = {
   loadingFormData: false,
   loadingFormDataComplete: false,
   loadingFormDataFail: false,
+  accessToken: null,
+  tokenId: null,
+  userId: null,
+  isLoginFail: false,
 };
 
 export default (state: any = initialState, action: any) => {
@@ -25,6 +29,27 @@ export default (state: any = initialState, action: any) => {
         loadingFormData: false,
         loadingFormDataComplete: false,
         loadingFormDataFail: true,
+      }
+    case 'LOGIN_SUCCESS':
+      return {
+        accessToken: action.payload.accessToken,
+        tokenId: action.payload.tokenId,
+        userId: action.payload.userId,
+        isLoginFail: false,
+      }
+    case 'LOGIN_FAILURE':
+      return {
+        accessToken: null,
+        tokenId: null,
+        userId: null,
+        isLoginFail: true,
+      }
+    case 'LOGOUT':
+      return {
+        accessToken: null,
+        tokenId: null,
+        userId: null,
+        isLoginFail: false,
       }
     default:
       return state

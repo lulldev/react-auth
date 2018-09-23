@@ -4,9 +4,12 @@ import {
   Card,
   CardBody,
   CardHeader,
+  Alert,
+  Button,
 } from 'reactstrap';
+import {Redirect} from 'react-router'
 import {connect} from 'react-redux';
-import {startLoadingAuthForm, completeLoadingAuthForm, failLoadingAuthForm} from '../actions/auth';
+import {loadAuthForm, login} from '../actions/auth';
 import DynamicForm from '../components/DynamicForm';
 
 
@@ -16,29 +19,10 @@ class Login extends React.Component<any, any> {
 
   constructor(props: any) {
     super(props);
-  }
-  
-  public componentWillMount(): void {
-    this.props.startLoadingAuthForm();
-    fetch('https://api.vs12.nwaj.ru/v1/forms/post/user/authentication')
-      .then((response: any) => {
-        return response.json();
-      })
-      .then((formData: any) => {
-        this.props.completeLoadingAuthForm(formData);
-      })
-      .catch(() => {
-        this.props.failLoadingAuthForm(new Error('Error loading form data'));
-      });
+    this.submitHandler = this.submitHandler.bind(this);
   }
 
   public render() {
-    
-    // if (!this.props.formData || !this.props.formData[Login.formId]) {
-    //   alert('Invalid form data on endpoint');
-    //   return null;
-    // }
-
     const fields: any[] = [];
 
     if (this.props.formData) {
@@ -59,7 +43,11 @@ class Login extends React.Component<any, any> {
         throw new Error('Error loading form from endpoint!');
       }
     }
-    
+
+    if (this.props.userId) {
+      return <Redirect to="/profile" />
+    }
+
     return (
       <Container>
         <Card>
@@ -67,31 +55,41 @@ class Login extends React.Component<any, any> {
             <h1>Login</h1>
           </CardHeader>
           <CardBody>
+            {this.props.isLoginFail && 
+              <Alert color="danger">Неверный логин/пароль<br/><br/>
+              <Button size="sm" onClick={() => this.props.loadAuthForm()}>Попробовать еще раз</Button></Alert>}
             <DynamicForm
               id="authentication"
               fields={fields}
-              submitAction={() => {
-                console.log('call redux action')
-              }}
+              submitAction={this.submitHandler}
             />
           </CardBody>
         </Card>
       </Container>
     );
   }
+  
+  public componentWillMount(): void {
+    this.props.loadAuthForm();
+  }
+
+  protected submitHandler(requestData: any) {
+    this.props.login(requestData);
+  }
 }
 
 function mapStateToProps(state: any) {  
   return {
     formData: state.auth.formData,
+    isLoginFail: state.auth.isLoginFail,
+    userId: state.auth.userId,
   };
 }
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    startLoadingAuthForm: () => dispatch(startLoadingAuthForm()),
-    completeLoadingAuthForm: (formData: any) => dispatch(completeLoadingAuthForm(formData)),
-    failLoadingAuthForm: (error: any) => dispatch(failLoadingAuthForm(error)),
+    loadAuthForm: () => loadAuthForm(dispatch),
+    login: (requestData: any) => login(dispatch, requestData),
   };
 };
 

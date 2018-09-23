@@ -19,7 +19,7 @@ interface IDynamicField {
 interface IDynamicFormProps {
   id: string,
   fields?: IDynamicField[],
-  submitAction: () => void,
+  submitAction: (requestData: any) => void,
 };
 
 const DynamicForm = (props: IDynamicFormProps) => {
@@ -36,7 +36,7 @@ const DynamicForm = (props: IDynamicFormProps) => {
         Array.from(formElement).forEach((field: any) => {
           requestData[props.id][field.name] = field.value;
         });
-        console.log(requestData);
+        props.submitAction(requestData);
       }}
     >
       {
