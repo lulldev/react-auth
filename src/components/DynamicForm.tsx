@@ -7,10 +7,19 @@ import {
   Input,
 } from 'reactstrap';
 
+interface IDynamicField {
+  id: string,
+  type: any,
+  label: string,
+  required: boolean,
+  name: string,
+  disabled: boolean,
+};
 
 interface IDynamicFormProps {
-  fields?: any[],
-  onSubmit: () => void,
+  id: string,
+  fields?: IDynamicField[],
+  submitAction: () => void,
 };
 
 const DynamicForm = (props: IDynamicFormProps) => {
@@ -18,15 +27,35 @@ const DynamicForm = (props: IDynamicFormProps) => {
     return null;
   }
   return (
-    <Form onSubmit={props.onSubmit}>
-      <FormGroup>
-        <Label for="exampleEmail">Email</Label>
-        <Input type="email" name="email" id="exampleEmail" placeholder="something@idk.cool" />
-      </FormGroup>
-      <FormGroup>
-        <Label for="examplePassword" className="mr-sm-2">Password</Label>
-        <Input type="password" name="password" id="examplePassword" placeholder="don't tell!" />
-      </FormGroup>
+    <Form
+      id={props.id}
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formElement = event.currentTarget.getElementsByTagName('input');
+        const requestData = {[props.id]: {}};
+        Array.from(formElement).forEach((field: any) => {
+          requestData[props.id][field.name] = field.value;
+        });
+        console.log(requestData);
+      }}
+    >
+      {
+        props.fields.map((field: IDynamicField, key: number) => {
+          return (
+            <FormGroup key={key}>
+              <Label for={field.id}>{field.label}</Label>
+              <Input
+                type={field.type}
+                name={field.name} 
+                id={field.id} 
+                placeholder=""
+                disabled={field.disabled}
+                required={field.required}
+              />
+            </FormGroup>
+          )
+        })
+      }
       <FormGroup>
         <Button>Submit</Button>
       </FormGroup>
