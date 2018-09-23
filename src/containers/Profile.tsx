@@ -8,6 +8,7 @@ import {
 } from 'reactstrap';
 import {Redirect} from 'react-router'
 import {connect} from 'react-redux';
+import {logout} from '../actions/auth';
 
 
 class Profile extends React.Component<any, any> {
@@ -29,7 +30,7 @@ class Profile extends React.Component<any, any> {
           </CardHeader>
           <CardBody>
             User id is: {this.props.userId}<br/>
-            <Button size="sm" onClick={}>logout</Button>
+            <Button size="sm" onClick={this.props.logout}>logout</Button>
           </CardBody>
         </Card>
       </Container>
@@ -45,7 +46,7 @@ function mapStateToProps(state: any) {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    // loadAuthForm: () => loadAuthForm(dispatch),
+    logout: () => dispatch(logout()),
   };
 };
 
