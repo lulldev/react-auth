@@ -29,7 +29,7 @@ const DynamicForm = (props: IDynamicFormProps) => {
   return (
     <Form
       id={props.id}
-      onSubmit={(event) => {
+      onSubmit={(event: any) => {
         event.preventDefault();
         const formElement = event.currentTarget.getElementsByTagName('input');
         const requestData = {[props.id]: {}};

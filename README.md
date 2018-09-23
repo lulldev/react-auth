@@ -1,4 +1,4 @@
-<h1>Install project:</h1>
+<h1>React auth - login form by REST API:</h1>
 
 ```sh
 npm install
