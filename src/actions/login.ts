@@ -47,7 +47,6 @@ export const loginFailure = () => {
 };
 
 export const login = (dispatch: any, requestData: any) => {
-  console.log(requestData);
   fetch('https://api.vs12.nwaj.ru/v1/user/authentication', {
     method: 'POST',
     body: JSON.stringify(requestData)

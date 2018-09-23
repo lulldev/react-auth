@@ -8,7 +8,7 @@ import {
 } from 'reactstrap';
 import {Redirect} from 'react-router'
 import {connect} from 'react-redux';
-import {logout} from '../actions/auth';
+import {logout} from '../actions/login';
 
 
 class Profile extends React.Component<any, any> {
@@ -40,7 +40,7 @@ class Profile extends React.Component<any, any> {
 
 function mapStateToProps(state: any) {  
   return {
-    userId: state.auth.userId,
+    userId: state.login.userId,
   };
 }
 

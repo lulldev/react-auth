@@ -9,7 +9,7 @@ import {
 } from 'reactstrap';
 import {Redirect} from 'react-router'
 import {connect} from 'react-redux';
-import {loadAuthForm, login} from '../actions/auth';
+import {loadAuthForm, login} from '../actions/login';
 import DynamicForm from '../components/DynamicForm';
 
 
@@ -80,9 +80,9 @@ class Login extends React.Component<any, any> {
 
 function mapStateToProps(state: any) {  
   return {
-    formData: state.auth.formData,
-    isLoginFail: state.auth.isLoginFail,
-    userId: state.auth.userId,
+    formData: state.login.formData,
+    isLoginFail: state.login.isLoginFail,
+    userId: state.login.userId,
   };
 }
 
