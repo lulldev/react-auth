@@ -54,6 +54,9 @@ class Login extends React.Component<any, any> {
             name: receivedField.short_name,
           });
         });
+      } 
+      else {
+        throw new Error('Error loading form from endpoint!');
       }
     }
     
