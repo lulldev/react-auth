@@ -1,6 +1,4 @@
 import {combineReducers} from 'redux';
-// import searchReducer from './search';
+import auth from './auth';
 
-export default combineReducers({
-  // searchReducer
-});
+export default combineReducers({ auth } as any);
