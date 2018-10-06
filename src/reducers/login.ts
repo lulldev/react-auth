@@ -1,40 +1,28 @@
-const initialState: any = {
-  formData: null,
-  loadingFormData: false,
-  loadingFormDataComplete: false,
-  loadingFormDataFail: false,
+import {SimpleAction} from '../types/actions';
+import {UserPayload} from '../types/user';
+
+type LoginState = {
+  accessToken: null|string,
+  tokenId: null|string,
+  userId: null|string,
+  isLoginFail: boolean,
+};
+
+const initialState: LoginState = {
   accessToken: null,
   tokenId: null,
   userId: null,
   isLoginFail: false,
 };
 
-export default (state: any = initialState, action: any) => {
+export default (state: LoginState = initialState, action: SimpleAction) => {
   switch (action.type) {
-    case 'LOAD_AUTH_FORM_START':
-      return {
-        formData: null,
-        loadingFormData: true,
-        loadingFormDataComplete: false,
-      }
-    case 'LOAD_AUTH_FORM_COMPLETE':
-      return {
-        formData: action.payload,
-        loadingFormData: false,
-        loadingFormDataComplete: true,
-      }
-    case 'LOAD_AUTH_FORM_FAIL':
-      return {
-        formData: null,
-        loadingFormData: false,
-        loadingFormDataComplete: false,
-        loadingFormDataFail: true,
-      }
     case 'LOGIN_SUCCESS':
+      const payload: UserPayload = action.payload;
       return {
-        accessToken: action.payload.accessToken,
-        tokenId: action.payload.tokenId,
-        userId: action.payload.userId,
+        accessToken: payload.accessToken,
+        tokenId: payload.tokenId,
+        userId: payload.userId,
         isLoginFail: false,
       }
     case 'LOGIN_FAILURE':

@@ -82,7 +82,7 @@ class Login extends React.Component<any, any> {
 
 function mapStateToProps(state: any) {  
   return {
-    formData: state.login.formData,
+    formData: state.loadingAuthForm.formData,
     isLoginFail: state.login.isLoginFail,
     userId: state.login.userId,
   };
