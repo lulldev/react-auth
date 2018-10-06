@@ -1,53 +1,30 @@
-export const startLoadingAuthForm = () => {
-  return {
-    type: 'LOAD_AUTH_FORM_START',
-  };
-};
+import {Dispatch} from 'redux';
 
-export const completeLoadingAuthForm = (formData: any) => {
-  return {
-    type: 'LOAD_AUTH_FORM_COMPLETE',
-    payload: formData,
-  };
-};
+import {
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+  LOGOUT,
+} from '../constants/actions';
 
-export const failLoadingAuthForm = (error: any) => {
-  return {
-    type: 'LOAD_AUTH_FORM_FAIL',
-    payload: error
-  };
-};
+import {USER_AUTHENTICATION_ENDPOINT} from '../constants/api';
 
-export const loadAuthForm = (dispatch: any) => {
-  dispatch(startLoadingAuthForm());
-  fetch('https://api.vs12.nwaj.ru/v1/forms/post/user/authentication')
-    .then((response: any) => {
-      return response.json();
-    })
-    .then((formData: any) => {
-      dispatch(completeLoadingAuthForm(formData));
-    })
-    .catch(() => {
-      dispatch(failLoadingAuthForm(new Error('Error loading form data')));
-    });
-};
-
+import {SimpleAction} from '../types/actions';
 
 export const loginSuccess = (accessData: any) => {
   return {
-    type: 'LOGIN_SUCCESS',
+    type: LOGIN_SUCCESS,
     payload: accessData,
   };
 };
 
-export const loginFailure = () => {
+export const loginFailure = (): SimpleAction => {
   return {
-    type: 'LOGIN_FAILURE',
+    type: LOGIN_FAILURE,
   };
 };
 
-export const login = (dispatch: any, requestData: any) => {
-  fetch('https://api.vs12.nwaj.ru/v1/user/authentication', {
+export const login = (dispatch: Dispatch<SimpleAction>, requestData: any) => {
+  fetch(USER_AUTHENTICATION_ENDPOINT, {
     method: 'POST',
     body: JSON.stringify(requestData)
   })
@@ -66,8 +43,8 @@ export const login = (dispatch: any, requestData: any) => {
     });
 };
 
-export const logout = () => {
+export const logout = (): SimpleAction => {
   return {
-    type: 'LOGOUT',
+    type: LOGOUT,
   };
 };

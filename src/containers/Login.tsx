@@ -9,7 +9,8 @@ import {
 } from 'reactstrap';
 import {Redirect} from 'react-router'
 import {connect} from 'react-redux';
-import {loadAuthForm, login} from '../actions/login';
+import {login} from '../actions/login';
+import {loadAuthForm} from '../actions/loadAuthForm';
 import DynamicForm from '../components/DynamicForm';
 
 
@@ -27,6 +28,7 @@ class Login extends React.Component<any, any> {
 
     if (this.props.formData) {
       const authFormData = this.props.formData[Login.formId];
+      console.log(authFormData);
       if (authFormData.hasOwnProperty('children') && Array.isArray(authFormData.children)) {
         authFormData.children.forEach((receivedField: any) => {
           fields.push({
