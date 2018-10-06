@@ -26,7 +26,6 @@ const DynamicForm = (props: IDynamicFormProps) => {
         const formElement = event.currentTarget.getElementsByTagName('input');
         const requestData = {[props.id]: {}};
         Array.from(formElement).forEach((field: HTMLInputElement) => {
-          console.log(field);
           requestData[props.id][field.name] = field.value;
         });
         props.submitAction(requestData);

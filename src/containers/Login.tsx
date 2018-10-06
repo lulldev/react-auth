@@ -39,7 +39,6 @@ class Login extends React.Component<ILoginProps, any> {
 
     if (this.props.formData) {
       const authFormData = this.props.formData[Login.formId];
-      console.log(authFormData);
       if (authFormData.hasOwnProperty('children') && Array.isArray(authFormData.children)) {
         authFormData.children.forEach((receivedField: any) => {
           fields.push({
@@ -69,13 +68,12 @@ class Login extends React.Component<ILoginProps, any> {
           </CardHeader>
           <CardBody>
             {this.props.isLoginFail && 
-              <Alert color="danger">Неверный логин/пароль<br/><br/>
-              <Button size="sm" onClick={() => this.props.loadAuthForm()}>Попробовать еще раз</Button></Alert>}
+              <Alert color="danger">Неверный логин/пароль</Alert>}
             <DynamicForm
-              id="authentication"
-              fields={fields}
-              submitAction={this.submitHandler}
-            />
+                id="authentication"
+                fields={fields}
+                submitAction={this.submitHandler}
+              />
           </CardBody>
         </Card>
       </Container>
