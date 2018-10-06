@@ -1,11 +1,6 @@
 import {SimpleAction} from '../types/actions';
+import {LoadAuthFormState} from '../types/state';
 
-type LoadAuthFormState = {
-  formData: object|null,
-  loadingFormData: boolean,
-  loadingFormDataComplete: boolean,
-  loadingFormDataFail: boolean,
-};
 
 const initialState: LoadAuthFormState = {
   formData: null,

@@ -7,24 +7,35 @@ import {
   Alert,
   Button,
 } from 'reactstrap';
+import {Dispatch} from 'redux';
 import {Redirect} from 'react-router'
 import {connect} from 'react-redux';
 import {login} from '../actions/login';
 import {loadAuthForm} from '../actions/loadAuthForm';
+import {SimpleAction} from '../types/actions';
 import DynamicForm from '../components/DynamicForm';
+import {IDynamicField} from '../types/dynamicField';
 
 
-class Login extends React.Component<any, any> {
+interface ILoginProps {
+  formData: object|null;
+  userId: null|string;
+  isLoginFail: boolean;
+  loadAuthForm: () => void;
+  login: (requestData: object) => void;
+};
+
+class Login extends React.Component<ILoginProps, any> {
 
   private static formId = 'authentication';
 
-  constructor(props: any) {
+  constructor(props: ILoginProps) {
     super(props);
     this.submitHandler = this.submitHandler.bind(this);
   }
 
   public render() {
-    const fields: any[] = [];
+    const fields: IDynamicField[] = [];
 
     if (this.props.formData) {
       const authFormData = this.props.formData[Login.formId];
@@ -75,7 +86,7 @@ class Login extends React.Component<any, any> {
     this.props.loadAuthForm();
   }
 
-  protected submitHandler(requestData: any) {
+  protected submitHandler(requestData: object) {
     this.props.login(requestData);
   }
 }
@@ -88,10 +99,10 @@ function mapStateToProps(state: any) {
   };
 }
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: Dispatch<SimpleAction>) => {
   return {
     loadAuthForm: () => loadAuthForm(dispatch),
-    login: (requestData: any) => login(dispatch, requestData),
+    login: (requestData: object) => login(dispatch, requestData),
   };
 };
 

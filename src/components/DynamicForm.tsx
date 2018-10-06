@@ -6,20 +6,12 @@ import {
   Label,
   Input,
 } from 'reactstrap';
-
-interface IDynamicField {
-  id: string,
-  type: any,
-  label: string,
-  required: boolean,
-  name: string,
-  disabled: boolean,
-};
+import {IDynamicField} from '../types/dynamicField';
 
 interface IDynamicFormProps {
   id: string,
   fields?: IDynamicField[],
-  submitAction: (requestData: any) => void,
+  submitAction: (requestData: object) => void,
 };
 
 const DynamicForm = (props: IDynamicFormProps) => {
@@ -29,11 +21,12 @@ const DynamicForm = (props: IDynamicFormProps) => {
   return (
     <Form
       id={props.id}
-      onSubmit={(event: any) => {
+      onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formElement = event.currentTarget.getElementsByTagName('input');
         const requestData = {[props.id]: {}};
-        Array.from(formElement).forEach((field: any) => {
+        Array.from(formElement).forEach((field: HTMLInputElement) => {
+          console.log(field);
           requestData[props.id][field.name] = field.value;
         });
         props.submitAction(requestData);

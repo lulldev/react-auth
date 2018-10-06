@@ -1,15 +1,12 @@
 import {Dispatch} from 'redux';
-
 import {
   LOAD_AUTH_FORM_START,
   LOAD_AUTH_FORM_COMPLETE,
   LOAD_AUTH_FORM_FAIL,
 } from '../constants/actions';
-
 import {SimpleAction} from '../types/actions';
-import {IResponse} from '../types/network';
-
 import {FORM_AUTHENTICATION_ENDPOINT} from '../constants/api';
+
 
 export const startLoadingAuthForm = (): { type: typeof LOAD_AUTH_FORM_START } => {
   return {
@@ -34,7 +31,7 @@ export const failLoadingAuthForm = (error: Error): { type: typeof LOAD_AUTH_FORM
 export const loadAuthForm = (dispatch: Dispatch<SimpleAction>) => {
   dispatch(startLoadingAuthForm());
   fetch(FORM_AUTHENTICATION_ENDPOINT)
-    .then((response: IResponse) => {
+    .then((response: Response) => {
       return response.json();
     })
     .then((formData: object) => {

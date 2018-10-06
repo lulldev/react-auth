@@ -1,12 +1,7 @@
 import {SimpleAction} from '../types/actions';
 import {UserPayload} from '../types/user';
+import {LoginState} from '../types/state';
 
-type LoginState = {
-  accessToken: null|string,
-  tokenId: null|string,
-  userId: null|string,
-  isLoginFail: boolean,
-};
 
 const initialState: LoginState = {
   accessToken: null,

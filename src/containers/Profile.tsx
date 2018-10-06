@@ -8,12 +8,19 @@ import {
 } from 'reactstrap';
 import {Redirect} from 'react-router'
 import {connect} from 'react-redux';
+import {Dispatch} from 'redux';
+import {SimpleAction} from '../types/actions';
 import {logout} from '../actions/login';
 
 
-class Profile extends React.Component<any, any> {
+interface IProfileProps {
+  userId: null|string;
+  logout?: () => void;
+};
 
-  constructor(props: any) {
+class Profile extends React.Component<IProfileProps, any> {
+
+  constructor(props: IProfileProps) {
     super(props);
   }
 
@@ -44,7 +51,7 @@ function mapStateToProps(state: any) {
   };
 }
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: Dispatch<SimpleAction>) => {
   return {
     logout: () => dispatch(logout()),
   };
